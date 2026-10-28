@@ -42,7 +42,7 @@ a.btn{display:block;background:#1B5E20;color:#fff;text-decoration:none;padding:1
 <a class="btn" href="https://github.com/coscaSupport/busalarm-guide/releases/download/routeguide/app-release.apk">[버스네비게이션] 설치 파일 내려받기</a>
 <a class="btn" href="routeguide-updates.html">[버스네비게이션] 업데이트 내역 보기</a>
 <p class="sub">
-    버전 2026.10.26.  ver.4 · 안드로이드 8.0 이상<br>
+    <span id="rgVersion">안드로이드 8.0 이상</span><br>
     내려받은 파일을 누른 뒤, 그 파일을 내려받은 앱에서 설치하도록 한 번 허용해 주셔야 합니다.<br>
     구글 플레이 스토어에 게시하지 않고 개인 배포판 앱이라 설치할 때 확인 경고가 뜰 수 있습니다. 그대로 진행하시면 됩니다.
     "알수 없는 앱 설치" 와 "바이러스 경고" 등... 기타 경고 메세지는 구글 플레이 스토어를 거치지 않은 일반 배포에 나타나는 통상적인 경고입니다.
@@ -81,5 +81,29 @@ a.btn{display:block;background:#1B5E20;color:#fff;text-decoration:none;padding:1
     "알수 없는 앱 설치" 와 "바이러스 경고" 등... 기타 경고 메세지는 구글 플레이 스토어를 거치지 않은 일반 배포에 나타나는 통상적인 경고입니다.
 </p>
 </div>
+<script>
+// 버스 네비게이션 버전 줄(2026-10-28): 설치 파일 릴리즈의 제목(예: "ver.5")과 파일 올린 날짜를 읽어 저절로 적는다.
+// 새 버전을 올릴 때는 릴리즈 편집 화면에서 파일을 바꿔 끼우고 제목에 버전 번호만 고치면 된다.
+(function () {
+  fetch("https://api.github.com/repos/coscaSupport/busalarm-guide/releases/tags/routeguide")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d) return;
+      var title = (d.name || "").trim();
+      var m = /^\d+$/.test(title) ? [null, title] : /\bver\.?\s*(\d+)\b/i.exec(title);
+      var asset = (d.assets || []).filter(function (a) { return a.name === "app-release.apk"; })[0];
+      var parts = [];
+      if (m) parts.push("ver." + m[1]);
+      if (asset && asset.updated_at) {
+        var t = new Date(asset.updated_at);
+        var k = new Date(t.getTime() + 9 * 3600 * 1000);
+        parts.push(k.getUTCFullYear() + "년 " + (k.getUTCMonth() + 1) + "월 " + k.getUTCDate() + "일 올림");
+      }
+      parts.push("안드로이드 8.0 이상");
+      document.getElementById("rgVersion").textContent = parts.join(" · ");
+    })
+    .catch(function () {});
+})();
+</script>
 </body>
 </html>
