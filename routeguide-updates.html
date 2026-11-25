@@ -8,8 +8,10 @@
 body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:24px;line-height:1.7;color:#212121;word-break:keep-all;overflow-wrap:anywhere}
 h1{font-size:24px;margin:0 0 8px}
 h2{font-size:18px;margin:28px 0 8px;color:#1B5E20}
-a.btn{display:block;background:#1B5E20;color:#fff;text-decoration:none;padding:14px;border-radius:12px;text-align:center;margin:12px 0}
-.box{background:#F3F5F7;border:1px solid #E1E5EA;border-radius:12px;padding:8px 16px 16px;margin:16px 0}
+a.btn{display:block;position:relative;background:linear-gradient(#2E7D32,#1B5E20);color:#fff;text-decoration:none;padding:14px;border-radius:0;border-bottom:3px solid #12441A;text-align:center;margin:12px 0;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
+a.btn::after{content:"";position:absolute;top:0;right:0;width:14px;height:14px;background:linear-gradient(to left bottom,transparent 50%,#8FC79A 50%)}
+.box{position:relative;background:#F3F5F7;border:1px solid #E1E5EA;border-radius:0;padding:8px 16px 16px;margin:16px 0;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
+.box::after{content:"";position:absolute;top:0;right:0;width:16px;height:16px;background:linear-gradient(to left bottom,transparent 50%,#C9D3DC 50%)}
 ul{margin:0;padding-left:20px}
 li{margin:6px 0}
 .sub{font-size:13px;color:#90A4AE;margin:8px 0 0}
